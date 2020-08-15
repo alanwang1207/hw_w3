@@ -197,8 +197,13 @@
                 }
                 $(".deleteItem").on("click",function(){
                     var index = $(this).closest("li").index();
-                    alert(index);
-                    $("#newsModal").modal("hide");
+                    $.ajax({
+                        type:"delete",
+                        url:"/home/news",
+                        data:newsList[index]
+                    }).then(function(e){
+                        DownloadAndRefresh();
+                    })
                 })
             }
 // 加號
