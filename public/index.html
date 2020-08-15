@@ -156,9 +156,27 @@ $(function () {
 
     // 練習與任務:
 
-
-
-
+    for(let i = 0;i<newsList.length;i++){
+        var newsItem = newsList[i];
+        showToast("test",newsItem.title);
+          // 步驟一
+        // 寫法一
+        // var liText = newsItem.title+"["+newsItem.ymd+"]";
+        // 寫法二
+        // var liText = `${newsItem.title} -- [${newsItem.ymd}]`;
+        // 寫法三
+        // var liText = `<li>${newsItem.title}[${newsItem.ymd}]</li>`;
+        // $("#latestNews").append(liText);
+        // 終極版
+        var liText = newsItem.title + "["+ newsItem.ymd+"]";
+        var $li = $("<li></li>")
+        .text(liText)
+        .addClass("list-group-item");
+        // 寫法一
+        // $("#latestNews").append($li);
+        // 寫法二
+        $li.appendTo("#latestNews");
+    }
 
 
 })  // end of init.
