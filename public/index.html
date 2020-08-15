@@ -161,6 +161,8 @@
                 ];
 
             // 練習與任務:
+            // 編輯用
+            var currentindex = -1;
             DownloadAndRefresh();
             function DownloadAndRefresh(){
                 $.ajax({
@@ -195,6 +197,14 @@
                     // 寫法二
                     $li.appendTo("#latestNews");
                 }
+                $(".editItem").on("click",function(){
+                    var index = $(this).closest("li").index();
+                    currentindex = index;
+                    $("#titleTextBox").prop("value",newsList[index].title);
+                    $("#ymdTextBox").val(newsList[index].ymd);
+
+                    $("#newsModal").modal({backdrop:"static"})
+                })
                 $(".deleteItem").on("click",function(){
                     var index = $(this).closest("li").index();
                     $.ajax({
@@ -217,7 +227,8 @@
             $("#okButton").on("click",function()
             {
                 $("#newsModal").modal("hide");
-                let dataToServer = {
+                if(currentindex <0){
+                    let dataToServer = {
                     title:$("#titleTextBox").prop("value"),
                     ymd:$("#ymdTextBox").val()
                 }
@@ -230,6 +241,23 @@
                     DownloadAndRefresh();
                     // alert("OK");
                 })
+            }
+                else{
+                    let dataToServer = {
+                    newsId:newsList[currentindex].newsId,
+                    title:$("#titleTextBox").prop("value"),
+                    ymd:$("#ymdTextBox").val()
+                }
+                $.ajax({
+                    type:"put",
+                    url:"/home/news",
+                    data:dataToServer
+                }).then(function(e){
+                    DownloadAndRefresh();
+                    showToast(e);
+                })
+
+                }
                 // alert(JSON.stringify(dataToServer))
                 // console.log(dataToServer);
             })
