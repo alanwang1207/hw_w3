@@ -192,6 +192,9 @@
                     $li.appendTo("#latestNews");
                 }
             }
+            $("#newItem").on("click",function(){
+                $("#newsModal").modal({backdrop:"static"})
+            })
         })  // end of init.
 
     </script>
